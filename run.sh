@@ -1,0 +1,1 @@
+locust --headless -f locustfile.py --host http://container_node_efasdfasd:3000 StaticFileOnly

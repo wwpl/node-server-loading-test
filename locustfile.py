@@ -1,7 +1,22 @@
-from locust import HttpUser, task
+from locust import between, task, HttpUser,TaskSet
 
-class HelloWorldUser(HttpUser):
-    host="http://container_node_dfasdfasd:3000"
+MIN_WAIT=0
+MAX_WAIT=0
+
+class StaticFileTask(TaskSet):
     @task
-    def hello_world(self):
+    def static_file(self):
         self.client.get("/")
+
+class StaticFileOnly(HttpUser):
+    tasks=[StaticFileTask]
+    wait_time = between(MIN_WAIT, MAX_WAIT) 
+
+class ReadTask(TaskSet):
+    @task
+    def get_user(self):
+        self.client.get("/api/users")
+    
+class ReadOnly(HttpUser):
+    tasks=[ReadTask]
+    wait_time = between(MIN_WAIT, MAX_WAIT) 
