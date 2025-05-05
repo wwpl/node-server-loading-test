@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  service_main: # service名 他の名前と被らない様に
+    image: python:nonfunctionefsd # 例：node:xxx imageの名前　他の名前と被らないように
+    build: ./
+    container_name: container_nonfunctionefsd # 例：container_node_xxx containerの名前　他の名前と被らないように
+    stdin_open: true
+    tty: true
+    working_dir: '/tmp/work'
+    volumes:
+      - ../:/tmp/work # 例　../node-src:/tmp/work　node-srcを/tmp/workにマウントしている
+    networks:
+      - container_network
+networks:
+  container_network:
+    external: true
